@@ -1,0 +1,7 @@
+FROM alpine
+RUN apk --no-cache add tini
+COPY bin/publisher /publisher
+RUN addgroup publisher && adduser -D -G publisher publisher \
+ && chown -R publisher:publisher /publisher
+USER publisher
+CMD ["/sbin/tini", "--", "/publisher"]

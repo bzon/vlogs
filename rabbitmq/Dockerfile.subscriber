@@ -1,0 +1,7 @@
+FROM alpine
+RUN apk --no-cache add tini
+COPY bin/subscriber /subscriber
+RUN addgroup subscriber && adduser -D -G subscriber subscriber \
+ && chown -R subscriber:subscriber /subscriber
+USER subscriber
+CMD ["/sbin/tini", "--", "/subscriber"]
